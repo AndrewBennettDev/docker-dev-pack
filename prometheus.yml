@@ -1,0 +1,7 @@
+scrape_configs:
+  - job_name: 'micro'
+    metrics_path: '/prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['host.docker.internal:2442', 'localhost:2442', 'docker0:2442']
+      
