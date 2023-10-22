@@ -46,22 +46,20 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:29092
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
 
-  mysql:
-    image: mysql:8
-    container_name: mysql
-    command: --default-authentication-plugin=mysql_native_password
+  mariadb:
+    image: docker.io/bitnami/mariadb:11.1
     ports:
-      - "3306:3306"
-    healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
-      interval: 5s
-      timeout: 10s
-      retries: 30
-    environment:
-      MYSQL_ROOT_PASSWORD: "password_here"
+      - '3306:3306'
     volumes:
-      - ~/Documents/DockerProjects/dkr-mysql:/var/lib/dkr-mysql     # Keeps data persisted between restarts in /Users/Shared/mysql
-      - ./config/sql-data:/docker-entrypoint-initdb.d # initialize db with schemas
+      - 'mariadb_data:/bitnami/mariadb'
+    environment:
+      # NOTE: change to no outside of dev
+      - ALLOW_EMPTY_PASSWORD=yes
+    healthcheck:
+      test: ['CMD', '/opt/bitnami/scripts/mariadb/healthcheck.sh']
+      interval: 15s
+      timeout: 5s
+      retries: 6
 
   redis:
     image: redis:latest
