@@ -49,9 +49,9 @@ services:
   mariadb:
     image: docker.io/bitnami/mariadb:11.1
     ports:
-      - '3306:3306'
+      - "3306:3306"
     volumes:
-      - 'mariadb_data:/bitnami/mariadb'
+      - "mariadb_data:/bitnami/mariadb"
     environment:
       ALLOW_EMPTY_PASSWORD: yes #change to no in prod
       MYSQL_DATABASE: maria_docker_local
@@ -77,7 +77,7 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
     ports:
-      - 9090:9090
+      - "9090:9090"
 
   grafana:
     image: grafana/grafana:8.5.13
@@ -90,6 +90,11 @@ services:
     volumes:
       - ./config/grafana/provisioning:/etc/grafana/provisioning
       - ./config/grafana/dashboards:/var/lib/grafana/dashboards
+  spark:
+    image: apache/spark: 4.0.0-scala2.13-java17-python3-r-ubuntu
+    container_name: spark
+    ports: 
+      - "15002:15002"
 
 volumes:
   mariadb_data:
