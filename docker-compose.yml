@@ -91,7 +91,7 @@ services:
       - ./config/grafana/provisioning:/etc/grafana/provisioning
       - ./config/grafana/dashboards:/var/lib/grafana/dashboards
   spark:
-    image: apache/spark: 4.0.0-scala2.13-java17-python3-r-ubuntu
+    image: apache/spark:4.0.0-scala2.13-java17-python3-r-ubuntu
     container_name: spark
     ports: 
       - "15002:15002"
